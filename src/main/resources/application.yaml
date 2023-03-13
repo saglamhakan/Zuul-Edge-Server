@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: zuul-edge-server
+  profiles:
+    actives: localhost
+
+info:
+  component: Zuul Edge Server
+
+---
+spring:
+  profiles: localhost
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+     instance-id: ${spring.application.name}:${random.uuid}
+
+server:
+  port: 8762
+
+zuul:
+  routes:
+    product-service:
+      path: /api/1.0/product/**
+      serviceId: product-service
+      strip-prefix: false
